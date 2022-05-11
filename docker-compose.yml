@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  combi19_postgres:
+    image: postgres:latest
+    container_name: combi19_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: combi19_db
+    ports:
+      - 5432:5432
