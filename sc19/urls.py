@@ -105,4 +105,7 @@ urlpatterns = [
     # Django
     path('admin/clearcache/', include('clearcache.urls')),
     path('admin/', admin.site.urls),
+
+    # Django Browser Reload
+    path("__reload__/", include("django_browser_reload.urls"))
 ]
