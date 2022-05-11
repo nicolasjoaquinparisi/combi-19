@@ -1,0 +1,68 @@
+{% extends "funcionalidades/admin/editar.html" %}
+{% block title %}Combi 19 - Alta/Editar Chofer{% endblock %}
+{% block volver %}/listar-chofer{% endblock %}
+{% block form_fields %}
+<div class="row">
+    <div class="col mb-3">
+        <label for="last_name" class="form-label">Apellido</label>
+        <input id="last_name" name="last_name" type="text" value="{{ object.last_name }}" class="form-control" required="true" placeholder="Ingrese el apellido">
+        <div class="invalid-feedback">
+            Por favor, ingrese el apellido del chofer
+        </div>
+    </div>
+    <div class="col mb-3">
+        <label for="first_name" class="form-label">Nombre</label>
+        <input id="first_name" name="first_name" type="text" value="{{ object.first_name }}" class="form-control" required="true" placeholder="Ingrese el nombre">
+        <div class="invalid-feedback">
+            Por favor, ingrese el nombre del chofer
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col mb-3">
+        <label for="email" class="form-label">Email</label>
+        <div class="input-group">
+            <input id="email" name="email" type="email" value="{{ object.email }}" class="form-control" required="true" placeholder="Ingrese el email">
+            <div class="invalid-feedback">
+                Por favor, ingrese el email del chofer
+            </div>
+        </div>
+        <small id="email_help" class="form-text text-muted">Una vez registrado, el chofer utilizará este email para iniciar sesión.</small>
+    </div>
+    <div class="col mb-3">
+        <label for="phone_number" class="form-label">Teléfono</label>
+        <input id="phone_number" name="phone_number" type="text" value="{{ object.telefono }}" class="form-control" required="true" placeholder="Ingrese el número de teléfono">
+        <div class="invalid-feedback">
+            Por favor, ingrese el número de teléfono del chofer
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <label for="password" class="form-label">Contraseña</label>
+        <input id="password" name="password" type="password" class="form-control validate" required="true" placeholder="Ingrese la contraseña" pattern="(?=.*\d[@\[\]^_`{|}~!#$%&()*+,-./]).{6,}">
+        <div class="valid-feedback" id="password-match">
+            Las contraseñas coinciden
+        </div>
+        <div class="invalid-feedback" id="password-dismatch">
+            Las contraseñas no coindicen
+        </div>
+        <div id="message" class="alert alert-warning password-alert" role="alert">
+            <ul>
+                <li id="length" class="invalid">La contraseña debe tener al menos 6 caracteres</li>
+                <li id="special-char" class="invalid">La contraseña debe tener al menos un caracter especial</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label for="password_confirm" class="form-label">Repita la contraseña</label>
+        <input id="password_confirm" name="password_confirm" type="password" class="form-control validate" required="true" placeholder="Repita la contraseña" pattern="(?=.*\d[@\[\]^_`{|}~!#$%&()*+,-./]).{6,}">
+        <div class="valid-feedback" id="password-confirm-match">
+            Las contraseñas coinciden
+        </div>
+        <div class="invalid-feedback" id="password-confirm-dismatch">
+            Las contraseñas no coindicen
+        </div>
+    </div>
+</div>
+{% endblock %}

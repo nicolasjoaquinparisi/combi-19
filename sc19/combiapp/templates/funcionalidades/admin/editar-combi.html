@@ -1,0 +1,48 @@
+{% extends "funcionalidades/admin/editar.html" %}
+{% block title %}Combi 19 - Alta/Editar Combi{% endblock %}
+{% block volver %}/listar-combi{% endblock %}
+{% block form_fields %}
+<div class="row">
+    <div class="col mb-3">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input id="modelo" name="modelo" type="text" value="{{ object.modelo }}" class="form-control" required="true" placeholder="Ingrese el modelo">
+        <div class="invalid-feedback">
+            Por favor, ingrese el modelo
+        </div>
+    </div>
+    <div class="col mb-3">
+        <label for="patente" class="form-label">Patente</label>
+        <input id="patente" name="patente" type="text" value="{{ object.patente }}" class="form-control" required="true" placeholder="Ingrese la patente">
+        <div class="invalid-feedback">
+            Por favor, ingrese la patente
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col mb-3">
+        <label for="asientos" class="form-label">Cantidad de Asientos</label>
+        <input id="asientos" name="asientos" type="text" value="{{ object.asientos }}" class="form-control" required="true" placeholder="Ingrese la cantidad de asientos">
+        <div class="invalid-feedback">
+            Por favor, ingrese la cantidad de asientos
+        </div>
+    </div>
+    <div class="col mb-3">
+        <label for="chofer" class="form-label">Chofer</label>
+        <select id="chofer" name="chofer" value="{{ object.chofer.pk }}" class="form-select mb-3" aria-label=".form-select-lg">
+        {% for chofer in choferes %}
+            <option value="{{ chofer.pk }}">{{ chofer.user_name }} ({{ chofer.last_name }}, {{ chofer.first_name }})</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>
+<div class="row w-51">
+    <div class="col mb-3">
+        <label for="tipo" class="form-label">Tipo de Combi</label>
+        <select id="tipo" name="tipo" value="{{ object.tipo }}" class="form-select mb-3" aria-label=".form-select-lg">
+        {% for tipo in tipos %}
+            <option value="{{ tipo }}">{{ tipo }}</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>
+{% endblock %}

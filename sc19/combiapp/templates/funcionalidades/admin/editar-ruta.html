@@ -1,0 +1,71 @@
+{% extends "funcionalidades/admin/editar.html" %}
+{% block title %}Combi 19 - Alta/Editar Ruta{% endblock %}
+{% block volver %}/listar-ruta{% endblock %}
+{% block form_fields %}
+<div class="row">
+    <div class="col mb-3">
+        <label for="origen" class="form-label">Origen</label>
+        <select id="origen" name="origen" value="{{ object.origen.pk }}" class="form-select mb-3" aria-label=".form-select-lg">
+        {% for lugar in lugares %}
+            <option value="{{ lugar.pk }}">{{ lugar }}</option>
+        {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+            Por favor, seleccione un origen
+        </div>
+    </div>
+    <div class="col mb-3">
+        <label for="destino" class="form-label">Destino</label>
+        <select id="destino" name="destino" value="{{ object.destino.pk }}" class="form-select mb-3" aria-label=".form-select-lg">
+        {% for lugar in lugares %}
+            <option value="{{ lugar.pk }}">{{ lugar }}</option>
+        {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+            Por favor, seleccione un destino
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col mb-3">
+        <label for="distancia" class="form-label">Kilómetros</label>
+        <input id="distancia" name="distancia" type="text" value="{{ object.distancia }}" class="form-control" required="true" placeholder="Ingrese una distancia en kilómetros">
+        <div class="invalid-feedback">
+            Por favor, ingrese la distancia en kilómetros
+        </div>
+    </div>
+    <div class="col mb-3">
+        <label for="combi" class="form-label">Combi</label>
+        <select id="combi" name="combi" value="{{ object.combi.pk }}" class="form-select mb-3" aria-label=".form-select-lg">
+        {% for combi in combis %}
+            <option value="{{ combi.pk }}">{{ combi }}</option>
+        {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+            Por favor, seleccione una combi
+        </div>
+    </div>
+</div>
+<div class="border box-duration rounded-3">
+    <div class="ms-3">
+        <label class="form-label mt-2">Duración</label>
+        <div class="row mb-3">
+            <div class="col-5">
+                <input id="horas" name="horas" type="number" value="{{ horas }}" class="form-control" required="true" placeholder="Horas">
+                <div class="invalid-feedback">
+                    Por favor, ingrese la hora
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <label class="form-label col-sm-1 pt-2">:</label>
+            </div>
+            <div class="col-5">
+                <input id="minutos" name="minutos" type="number" value="{{ minutos }}" class="form-control" required="true" placeholder="Minutos">
+                <div class="invalid-feedback">
+                    Por favor, ingrese los minutos
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

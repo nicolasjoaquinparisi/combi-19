@@ -1,0 +1,47 @@
+{% load static %}
+
+<main id="buscar-viaje-section">
+    <div class="container mt-4">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8">
+                <div class="headings d-flex justify-content-between align-items-center">
+                    <h2 class="h2">Buscar viajes</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="border shadow p-3 mb-5 bg-white rounded container my-4" style="width: 54%">
+        <div>
+            <div class="row">
+                <div class="col mb-3">
+                    <label for="origen" class="form-label">Origen</label>
+                    <select id="origen" class="form-select form-select mb-3" aria-label=".form-select-lg example">
+                        <option value="0" selected>Elija un origen...</option>
+                        {% for lugar in lugares %}
+                        <option value="{{ lugar.pk }}">{{ lugar }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col mb-3">
+                    <label for="destino" class="form-label">Destino</label>
+                    <select id="destino" class="form-select form-select mb-3" aria-label=".form-select-lg example">
+                        <option value="0" selected>Elija un destino...</option>
+                        {% for lugar in lugares %}
+                        <option value="{{ lugar.pk }}">{{ lugar }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Fecha de salida</label>
+                <div class="input-group date" data-provide="datepicker">
+                    <input id="date" class="form-control" type="date">
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="d-flex w-100 justify-content-end">
+            <a id="submit" class="btn w-45 btn-primary" onclick="buscarPasaje()">Buscar</a>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,51 @@
+{% load static %}
+
+<header class="bg-light text-white p-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm">
+                <div class="logo-section">
+                    <img src="{% static 'img/logo_is.png' %}" alt="logo" class="me-4 w-20 img-fluid">
+                    <h5 class="text-muted" id="dateAndTime">Fecha</h5>
+                </div>
+            </div>
+
+            <div class="col">
+                <!-- HEADER BUTTONS -->
+                {% if request.user.is_authenticated is True %}
+                <div id="header-buttons">
+                    <div class="d-flex align-items-center justify-content-end" style="margin-top:20px;">
+
+                        {% if request.user.cliente.tarjeta %}
+                        <img src="{% static 'img/gold.png' %}" height="28px">
+                        {% endif %}
+
+                        {% if request.user.chofer %}
+                        <img src="{% static 'img/icons/card.svg' %}" class="mt-1 chofer-card" height="28px">
+                        {% endif %}
+
+                        <div class="dropdown">
+                            <a class="navbar-brand btn button-logout dropdown-toggle" type="button"
+                               id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ user.email }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                {% if request.user.chofer or request.user.cliente %}
+                                <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="d-flex justify-content-end">
+                    {% if request.user.cliente.esta_bloqueado %}
+                        <label class="text-danger me-4">Cuenta bloqueada por {{request.user.cliente.cantidad_dias_bloqueo}} días</label>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

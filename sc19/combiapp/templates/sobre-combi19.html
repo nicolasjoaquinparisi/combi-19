@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <title>Combi 19</title>
+</head>
+
+<body>
+    {% if request.user.is_authenticated %}
+        {% include 'header.html' %}
+        {% include 'bases/user/user-navbar.html' %}
+    {% else %}
+        {% include 'bases/logged_out/logged_out_header.html' %}
+        {% include 'bases/logged_out/logged_out_nav-bar.html' %}
+    {% endif %}
+
+    <!-- ABOUT COMBI-19 -->
+    <main id="about-combi19" class="border p-3 mt-5 bg-white rounded w-50 p-3 container my-4">
+        <div class="d-flex justify-content-center align-items-center mb-3">
+            <h1 class="h3 mb-3 font-weight-normal">Sobre Combi-19</h1>
+        </div>
+        <p>Combi-19 nace de mí, Damián, chofer de combis.
+        <p>En el año pasado, 2020, logré generar mi propia empresa de combis, y por la actual situación vinculada a la
+            pandemia no pude comenzar.</p>
+        <p>La principal idea de Combi-19 es ofrecerle la posibilidad, a los futuros pasajeros, de comprar vía online los
+            pasajes de los viajes que deseen realizar.</p>
+    </main>
+
+    <script src="{% static 'js/global.js' %}"></script>
+</body>
+</html>

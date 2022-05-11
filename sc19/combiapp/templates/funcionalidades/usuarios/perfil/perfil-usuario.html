@@ -1,0 +1,92 @@
+<br>{% load static %}
+
+<div class="container mt-3 me-10">
+    <div class="main-body">
+        <div class="col-md-8">
+            <div class="card mb-3 p-2 border">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Apellido</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.last_name }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Nombre</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.first_name }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Email</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.email }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">DNI</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.cliente.dni }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Fecha de nacimiento</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.cliente.fecha_nacimiento |date:'d/m/Y' }}
+                        </div>
+                    </div>
+
+                    {% if request.user.cliente.tarjeta %}
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Titular</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.cliente.tarjeta.titular }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Número</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.cliente.tarjeta.numero }}
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Fecha de vencimiento</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{ request.user.cliente.tarjeta.get_formated_fecha_vencimiento }}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <a class="btn w-15 btn-primary" href="/editar-usuario">Editar</a>
+                        <a id="delete" href="javascript:void(0)" class="btn-eliminar btn w-15 btn-danger">Dar de baja</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
