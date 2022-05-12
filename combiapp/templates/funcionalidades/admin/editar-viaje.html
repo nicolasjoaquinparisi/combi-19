@@ -1,45 +1,52 @@
 {% extends "funcionalidades/admin/editar.html" %}
-{% block title %}Combi 19 - Alta/Editar Viaje{% endblock %}
+
+{% block title %}Alta/editar viaje{% endblock %}
 {% block volver %}/listar-viaje{% endblock %}
+{% block form_name %}Nuevo viaje{% endblock %}
+
 {% block form_fields %}
-<div class="row">
-    <div class="col mb-3">
-        <label for="ruta" class="form-label">Ruta</label>
-        <select id="ruta" name="ruta" value="{{ object.ruta }}" class="form-select mb-3" aria-label=".form-select-lg">
-        {% for ruta in rutas %}
-            <option value="{{ ruta.pk }}">{{ ruta }}</option>
-        {% endfor %}
-        </select>
-        <div class="invalid-feedback">
-            Por favor, seleccione una ruta
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <label for="fecha_de_salida" class="form-label">Fecha de salida</label>
-        <div class="input-group date" data-provide="datepicker">
-            <input id="fecha_de_salida" name="fecha_de_salida" type="date" value="{{ fecha_de_salida }}" class="form-control" required="true">
+<main class="mb-3">
+    <div class="d-flex justify-content-between gap-3">
+        <div class="w-100 mb-3">
+            <label for="ruta" class="form-label">Ruta</label>
+            <select id="ruta" name="ruta" value="{{ object.ruta }}" class="form-select mb-3" aria-label=".form-select-lg">
+            {% for ruta in rutas %}
+                <option value="{{ ruta.pk }}">{{ ruta }}</option>
+            {% endfor %}
+            </select>
             <div class="invalid-feedback">
-                Por favor, seleccione una fecha de salida
+                Por favor, seleccione una ruta
             </div>
         </div>
     </div>
-    <div class="col-md-2">
-        <label for="hora_de_salida" class="form-label">Hora de salida</label>
-        <div class="input-group date" data-provide="datepicker">
-            <input id="hora_de_salida" name="hora_de_salida" type="time" value="{{ hora_de_salida }}" class="form-control" required="true">
+    <div class="d-flex justify-content-between gap-3">
+        <div class="d-flex justify-content-between gap-3 w-50">
+            <div class="w-50">
+                <label for="fecha_de_salida" class="form-label">Fecha de salida</label>
+                <div class="input-group date" data-provide="datepicker">
+                    <input id="fecha_de_salida" name="fecha_de_salida" type="date" value="{{ fecha_de_salida }}" class="form-control" required="true">
+                    <div class="invalid-feedback">
+                        Por favor, seleccione una fecha de salida
+                    </div>
+                </div>
+            </div>
+            <div class="w-50">
+                <label for="hora_de_salida" class="form-label">Hora de salida</label>
+                <div class="input-group date" data-provide="datepicker">
+                    <input id="hora_de_salida" name="hora_de_salida" type="time" value="{{ hora_de_salida }}" class="form-control" required="true">
+                    <div class="invalid-feedback">
+                        Por favor, seleccione una hora de salida
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-50">
+            <label for="precio" class="form-label">Precio</label>
+            <input id="precio" name="precio" type="text" value="{{ object.precio }}" class="form-control" required="true" placeholder="Ingrese el precio">
             <div class="invalid-feedback">
-                Por favor, seleccione una hora de salida
+                Por favor, ingrese el precio
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <label for="precio" class="form-label">Precio</label>
-        <input id="precio" name="precio" type="text" value="{{ object.precio }}" class="form-control" required="true" placeholder="Ingrese el precio">
-        <div class="invalid-feedback">
-            Por favor, ingrese el precio
-        </div>
-    </div>
-</div>
+</main>
 {% endblock %}

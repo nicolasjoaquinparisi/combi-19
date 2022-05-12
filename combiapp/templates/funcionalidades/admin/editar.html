@@ -1,40 +1,18 @@
-{% load static %}
+{% extends "layout.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <!-- BOOTSTRAP -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <link rel="stylesheet" href="sweetalert2.min.css">
-        <title>{% block title %}Combi 19{% endblock %}</title>
-    </head>
-    <body>
-        {% include 'header.html' %}
-        {% include 'bases/admin/admin-navbar.html' %}
-        <div id="register-section">
-            <br><br>
-            <form class="shadow-lg p-3 mb-5 bg-white rounded w-50 p-3 container my-4 validacion-alta-usuario" method="post" novalidate>
-                {% block form_fields %}{% endblock %}
-                <br>
-                <div class="row">
-                    <div class="col mb-3">
-                        <button class="btn btn-primary w-100" type="submit">Aceptar</button>
-                    </div>
-                    <div class="col mb-3">
-                        <a class="btn btn-primary w-100" href="{% block volver %}/{% endblock %}" role="button">Volver</a>
-                    </div>
-                </div>
-                {% csrf_token %}
-            </form>
+{% block content %}
+<main class="container mt-5 w-50" id="register-section">
+    <form class="border mb-5 bg-white rounded p-3 container my-4 validacion-alta-usuario" method="POST" novalidate>
+        <h3 class="mb-4 fw-normal">{% block form_name %}{% endblock %}</h3>
+
+        <!-- Bloque con el formulario. Se implementa en cada archivo editar -->
+        {% block form_fields %}{% endblock %}
+
+        <div class="d-flex justify-content-between gap-3">
+            <button class="btn btn-primary w-100" type="submit">Aceptar</button>
+            <a class="btn btn-secondary w-100" href="{% block volver %}/{% endblock %}" role="button">Volver</a>
         </div>
-
-        <script src="{% static 'js/scripts.js' %}"></script>
-        <script src="{% static 'js/global.js' %}"></script>
-        <script src="{% static 'js/forms.js' %}"></script>
-        <script src="{% static 'js/notifications.js' %}"></script>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    </body>
-</html>
+        {% csrf_token %}
+    </form>
+</main>
+{% endblock %}

@@ -1,0 +1,15 @@
+<header class="bg-light">
+  {% if request.user.is_authenticated is not True %}
+      {% include 'layout/sign_out.html' %}
+  {% else %}
+      {% if user.is_superuser %}
+          {% include 'layout/admin-navbar.html' %}
+      {% else %}
+          {% if request.user.cliente %}
+            {% include 'layout/user-navbar.html' %}
+          {% else %}
+            {% include 'layout/chofer-navbar.html' %}
+          {% endif %}
+      {% endif %}
+  {% endif %}
+</header>

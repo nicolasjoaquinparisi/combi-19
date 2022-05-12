@@ -1,25 +1,24 @@
 {% extends "funcionalidades/admin/editar.html" %}
-{% block title %}Combi 19 - Alta/Editar Lugar{% endblock %}
+
+{% block title %}Alta/editar lugar{% endblock %}
 {% block volver %}/listar-lugar{% endblock %}
+{% block form_name %}Nuevo lugar{% endblock %}
+
 {% block form_fields %}
-<div class="row">
-    <div class="col mb-3">
+<div class="d-flex justify-content-between gap-3">
+    <div class="w-100">
         <label for="ciudad" class="form-label">Ciudad</label>
         <input id="ciudad" name="ciudad" type="text" value="{{ object.ciudad }}" class="form-control" required="true" placeholder="Ingrese la ciudad">
-        <div class="invalid-feedback">
-            Por favor, ingrese la ciudad
-        </div>
+        <p class="invalid-feedback">Por favor, ingrese la ciudad</p>
     </div>
-    <div class="col mb-3">
+    <div class="w-100">
         <label for="provincia" class="form-label">Provincia</label>
         <select id="provincia" name="provincia" value="{{ object.provincia }}" class="form-select mb-3" aria-label=".form-select-lg">
         {% for provincia in provincias %}
             <option value="{{ provincia }}">{{ provincia }}</option>
         {% endfor %}
         </select>
-        <div class="invalid-feedback">
-            Por favor, seleccione una provincia
-        </div>
+        <p class="invalid-feedback">Por favor, seleccione una provincia</p>
     </div>
 </div>
 {% endblock %}

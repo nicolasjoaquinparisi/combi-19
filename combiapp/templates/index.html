@@ -1,57 +1,14 @@
-{% load static %}
+{% extends "layout.html" %}
 
-<!DOCTYPE html>
+<!-- Title -->
+{% block title %}Combi-19{% endblock %}
 
-<html lang="en">
-
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <link rel="stylesheet" href="sweetalert2.min.css">
-  <title>Combi 19</title>
-</head>
-
-<body>
-
-  {% if request.user.is_authenticated is not True %}
-
-    {% include 'bases/logged_out/logged_out_header.html' %}
-    {% include 'bases/logged_out/logged_out_nav-bar.html' %}
-    {% include 'bases/dashboard-main.html' %}
-
-  {% else %}
-      {% include 'header.html' %}
-
-      {% if user.is_superuser %}
-
-          {% include 'bases/admin/admin-navbar.html' %}
-          <div class="px-4 py-5 my-5 text-center">
-              <h1 class="text-muted display-5 fw-bold">Bienvenido {{ user.first_name }} </h1>
-          </div>
-      {% else %}
-            {% if request.user.cliente %}
-              {% include 'bases/user/user-navbar.html' %}
-              {% include 'bases/dashboard-main.html' %}
-            {% else %}
-                {% include 'bases/user/chofer-navbar.html' %}
-                <div class="px-4 py-5 my-5 text-center">
-                  <h1 class="text-muted display-5 fw-bold">Bienvenido {{ user.first_name }} </h1>
-              </div>
-            {% endif %}
-
-      {% endif %}
-
+{% block content %}
+  {% if request.user.cliente %}
+    {% include 'dashboard-main.html' %}
   {% endif %}
-
-  <script src="{% static 'js/scripts.js' %}"></script>
-  <script src="{% static 'js/global.js' %}"></script>
-  <script src="{% static 'js/notifications.js' %}"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
-
-</html>
+      
+  <div class="ps-4 pe-4 pt-5 pb-5 mt-5 mb-5 text-center">
+      <h1 class="text-secondary fw-bold">Bienvenido {{ user.first_name }} </h1>
+  </div>
+{% endblock %}

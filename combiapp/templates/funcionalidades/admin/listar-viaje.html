@@ -1,228 +1,220 @@
-{% load static %}
+{% extends "layout.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Title -->
+{% block title %}Viajes{% endblock %}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <title>Combi 19</title>
-</head>
-<body onload="onListarViajes()">
+{% block content %}
+<main class="container">
+    <a class="btn btn-xl button-logout" type="button" href="/alta-viaje">Dar de alta viaje</a>
 
-{% include 'header.html' %}
-
-{% include 'bases/admin/admin-navbar.html' %}
-
-<div class="container-fluid d-flex justify-content-between">
-    <a class="me-3 btn btn-xl button-logout" type="button" href="/alta-viaje">Dar de alta viaje</a>
-
-    <!-- Button trigger modal -->
-    <button type="button" class="no-btn" style="color:var(--primary);" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Ver viajes eliminados
-    </button>
-</div>
-
-<br>
-
-{% if viajes_habilitados.count == 0 %}
-<div class="container p-4">
-    <div class="row">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="100"
-             height="100" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round"
-             stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <circle cx="12" cy="12" r="9"/>
-            <line x1="12" y1="8" x2="12" y2="12"/>
-            <line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-    </div>
-    <div class="row">
-        <div class="d-flex justify-content-center text-center">
-            <h2 class="h2" style="color:#9e9e9e;">Actualmente no hay viajes cargados en el sistema.</h2>
+    {% if viajes_habilitados.count == 0 %}
+    <div class="container p-4">
+        <div class="row">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="100"
+                height="100" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <circle cx="12" cy="12" r="9"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+        </div>
+        <div class="row">
+            <div class="d-flex justify-content-center text-center">
+                <h2 class="h2" style="color:#9e9e9e;">Actualmente no hay viajes cargados en el sistema.</h2>
+            </div>
         </div>
     </div>
-</div>
 
-{% else %}
+    {% else %}
 
-<div class="p-3 mb-5 rounded">
-    <div class="table-border table-responsive table--no-card m-b-30">
-        <table id="tabla" class="table table-borderless table-striped table-earning">
-            <thead>
-            <tr>
-                <th class="text-center">Ruta</th>
-                <th class="text-center">Fecha de salida</th>
-                <th class="text-center">Precio</th>
-                <th class="text-center">Pasajes disponibles</th>
-                <th class="text-center">Estado</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for viaje in viajes_habilitados %}
-            <tr>
-                <td class="text-center">{{viaje.ruta}}</td>
-                <td class="text-center">{{viaje.fecha_de_salida | date:'d/m/Y' }} a las {{viaje.hora_de_salida | date:'H:i'}}
-                </td>
-                <td class="text-center">${{viaje.precio |floatformat:0}}</td>
-                <td class="text-center"><span class="asientos-disponibles">{{viaje.get_asientos_disponibles}}</span> /
-                    {{viaje.ruta.combi.asientos}}
-                </td>
-                <td class="text-center estado-pasaje">{{viaje.estado}}</td>
-                <td><a href="/editar-viaje/{{viaje.id}}" class="btn-icon btn-icon-ml-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit animation-hover"
-                         style="margin-right: 0.5rem" width="20" height="20" viewBox="0 0 24 24" stroke-width="2"
-                         stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"/>
-                        <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"/>
-                        <line x1="16" y1="5" x2="19" y2="8"/>
-                    </svg>
-                </a></td>
-
-                <td>
-                    <a id="delete" href="javascript:void(0)" data-validate-delete-viaje-url="{% url 'eliminar-viaje' obj_id=viaje.id %}"
-                       class="btn-eliminar btn-icon btn-icon-ml-0-5">
-                        {% csrf_token %}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash animation-hover" width="20"
-                             height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#ff2825" fill="none"
-                             stroke-linecap="round" stroke-linejoin="round">
+    <div class="p-3 mb-5 rounded">
+        <div class="table-border table-responsive table--no-card m-b-30">
+            <table id="tabla" class="table table-borderless table-striped table-earning">
+                <thead>
+                <tr>
+                    <th class="text-center">Ruta</th>
+                    <th class="text-center">Fecha de salida</th>
+                    <th class="text-center">Precio</th>
+                    <th class="text-center">Pasajes disponibles</th>
+                    <th class="text-center">Estado</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for viaje in viajes_habilitados %}
+                <tr>
+                    <td class="text-center">{{viaje.ruta}}</td>
+                    <td class="text-center">{{viaje.fecha_de_salida | date:'d/m/Y' }} a las {{viaje.hora_de_salida | date:'H:i'}}
+                    </td>
+                    <td class="text-center">${{viaje.precio |floatformat:0}}</td>
+                    <td class="text-center"><span class="asientos-disponibles">{{viaje.get_asientos_disponibles}}</span> /
+                        {{viaje.ruta.combi.asientos}}
+                    </td>
+                    <td class="text-center estado-pasaje">{{viaje.estado}}</td>
+                    <td><a href="/editar-viaje/{{viaje.id}}" class="btn-icon btn-icon-ml-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-edit animation-hover"
+                            style="margin-right: 0.5rem" width="20" height="20" viewBox="0 0 24 24" stroke-width="2"
+                            stroke="#7bc62d" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <line x1="4" y1="7" x2="20" y2="7"/>
-                            <line x1="10" y1="11" x2="10" y2="17"/>
-                            <line x1="14" y1="11" x2="14" y2="17"/>
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+                            <path d="M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3"/>
+                            <path d="M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3"/>
+                            <line x1="16" y1="5" x2="19" y2="8"/>
                         </svg>
-                    </a>
-                </td>
+                    </a></td>
 
-                <td class="text-center">
-                    {% if viaje.estado == "Pendiente" %}
-                        <a href="javascript:void(0)" data-validate-cancelar-viaje-url="{% url 'cancelar-viaje' obj_id=viaje.id %}"
-                           class="btn btn-cancelar">Cancelar viaje</a>
-                    {% endif %}
+                    <td>
+                        <a id="delete" href="javascript:void(0)" data-validate-delete-viaje-url="{% url 'eliminar-viaje' obj_id=viaje.id %}"
+                        class="btn-eliminar btn-icon btn-icon-ml-0-5">
+                            {% csrf_token %}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash animation-hover" width="20"
+                                height="20" viewBox="0 0 24 24" stroke-width="2" stroke="#ff2825" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <line x1="4" y1="7" x2="20" y2="7"/>
+                                <line x1="10" y1="11" x2="10" y2="17"/>
+                                <line x1="14" y1="11" x2="14" y2="17"/>
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/>
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/>
+                            </svg>
+                        </a>
+                    </td>
 
-                    {% if viaje.estado == "Cancelado" %}
-                        <label class="text-muted">-</label>
-                    {% endif %}
-                </td>
+                    <td class="text-center">
+                        {% if viaje.estado == "Pendiente" %}
+                            <a href="javascript:void(0)" data-validate-cancelar-viaje-url="{% url 'cancelar-viaje' obj_id=viaje.id %}"
+                            class="btn btn-cancelar">Cancelar viaje</a>
+                        {% endif %}
 
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                        {% if viaje.estado == "Cancelado" %}
+                            <label class="text-muted">-</label>
+                        {% endif %}
+                    </td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-{% endif %}
+    {% endif %}
 
-{% csrf_token %}
-</div>
+    {% csrf_token %}
+    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog d-flex justify-content-center">
-        <div class="modal-content" style="width: 200%;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Viajes eliminados</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                {% if viajes_deshabilitados.count > 0 %}
-                <div class="d-flex justify-content-center ps-3 pe-3 mb-5 rounded">
-                    <div class="table-border table-responsive table--no-card m-b-30">
-                        <table id="tabla" class="table table-borderless table-striped table-earning">
-                            <thead>
-                            <tr>
-                                <th class="text-center">Ruta</th>
-                                <th class="text-center">Fecha de salida</th>
-                                <th class="text-center">Estado</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for viaje in viajes_deshabilitados %}
-                                <tr>
-                                    <td class="text-center">{{viaje.ruta}}</td>
-                                    <td class="text-center">{{viaje.fecha_de_salida | date:'d/m/Y' }} a las {{viaje.hora_de_salida | date:'H:i'}}</td>
-                                    <td class="text-center text-danger">Eliminado</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog d-flex justify-content-center">
+            <div class="modal-content" style="width: 200%;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Viajes eliminados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                {% else %}
-                <div class="container p-4">
-                    <div class="row">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="100"
-                             height="100" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round"
-                             stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <circle cx="12" cy="12" r="9"/>
-                            <line x1="12" y1="8" x2="12" y2="12"/>
-                            <line x1="12" y1="16" x2="12.01" y2="16"/>
-                        </svg>
-                    </div>
-                    <div class="row">
-                        <div class="d-flex justify-content-center text-center">
-                            <h2 class="h2" style="color:#9e9e9e;">Actualmente no hay viajes eliminados</h2>
+
+                <div class="modal-body">
+                    {% if viajes_deshabilitados.count > 0 %}
+                    <div class="d-flex justify-content-center ps-3 pe-3 mb-5 rounded">
+                        <div class="table-border table-responsive table--no-card m-b-30">
+                            <table id="tabla" class="table table-borderless table-striped table-earning">
+                                <thead>
+                                <tr>
+                                    <th class="text-center">Ruta</th>
+                                    <th class="text-center">Fecha de salida</th>
+                                    <th class="text-center">Estado</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for viaje in viajes_deshabilitados %}
+                                    <tr>
+                                        <td class="text-center">{{viaje.ruta}}</td>
+                                        <td class="text-center">{{viaje.fecha_de_salida | date:'d/m/Y' }} a las {{viaje.hora_de_salida | date:'H:i'}}</td>
+                                        <td class="text-center text-danger">Eliminado</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="container p-4">
+                        <div class="row">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle" width="100"
+                                height="100" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <circle cx="12" cy="12" r="9"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                        </div>
+                        <div class="row">
+                            <div class="d-flex justify-content-center text-center">
+                                <h2 class="h2" style="color:#9e9e9e;">Actualmente no hay viajes eliminados</h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-<script src="{% static 'js/global.js' %}"></script>
-<script src="{% static 'js/notifications.js' %}"></script>
-<script src="{% static 'js/scripts.js' %}"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-     $(".btn-eliminar").click(function () {
+    <script>
+        $(".btn-eliminar").click(function () {
 
-        let tr = $(this).closest("tr");
+            let tr = $(this).closest("tr");
 
-      $.ajax({
-        url: $(this).attr("data-validate-delete-viaje-url"),
-        data: $(this).serialize(),
-        dataType: 'json',
-        success: function (data) {
-            showNotification(data.result, data.message);
+        $.ajax({
+            url: $(this).attr("data-validate-delete-viaje-url"),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function (data) {
+                showNotification(data.result, data.message);
 
-            if(data.result == "OK") {
-                tr.remove();
-                if (document.getElementById('tabla').rows.length == 1)
-                {
-                    $(".swal2-confirm").click(function () {
-                        window.location.href = '/listar-viaje'
-                      });
+                if(data.result == "OK") {
+                    tr.remove();
+                    if (document.getElementById('tabla').rows.length == 1)
+                    {
+                        $(".swal2-confirm").click(function () {
+                            window.location.href = '/listar-viaje'
+                        });
+                    }
                 }
             }
-        }
-      });
-     });
+        });
+        });
 
 
-</script>
-<script>
-     $(".btn-cambiar-estado-viaje").click(function () {
-      $.ajax({
+    </script>
+    <script>
+        $(".btn-cambiar-estado-viaje").click(function () {
+        $.ajax({
+            url: $(this).attr("data-validate-cancelar-viaje-url"),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function (data) {
+                showNotification(data.result, data.message);
+
+                if(data.result == "OK") {
+                    $(".swal2-confirm").click(function () {
+                        window.location.href = '/listar-viaje'
+                    });
+                }
+            }
+        });
+        });
+
+
+    </script>
+    <script>
+        $(".btn-cancelar").click(function () {
+
+        $.ajax({
         url: $(this).attr("data-validate-cancelar-viaje-url"),
         data: $(this).serialize(),
         dataType: 'json',
@@ -232,32 +224,11 @@
             if(data.result == "OK") {
                 $(".swal2-confirm").click(function () {
                     window.location.href = '/listar-viaje'
-                  });
+                });
             }
         }
-      });
-     });
-
-
-</script>
-<script>
-    $(".btn-cancelar").click(function () {
-
-    $.ajax({
-    url: $(this).attr("data-validate-cancelar-viaje-url"),
-    data: $(this).serialize(),
-    dataType: 'json',
-    success: function (data) {
-        showNotification(data.result, data.message);
-
-        if(data.result == "OK") {
-            $(".swal2-confirm").click(function () {
-                window.location.href = '/listar-viaje'
-            });
-        }
-    }
-    });
-    });
-</script>
-</body>
-</html>
+        });
+        });
+    </script>
+</main>
+{% endblock %}

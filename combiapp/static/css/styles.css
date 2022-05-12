@@ -7,24 +7,16 @@ body {
     background-color: #f7f6f6
 }
 
-.w-45 {
-    width: 45%;
+.bg-color-primary {
+    background-color: var(--primary);
 }
 
-.w-10 {
-    width: 10%;
-}
-
-.w-51 {
-    width: 51.5%;
+.bg-dark-primary {
+    background-color: var(--dark-primary);
 }
 
 .c-red {
     color: red;
-}
-
-.mb-3 {
-    margin-bottom: 3rem;
 }
 
 .border-gold-user {
@@ -112,7 +104,7 @@ body {
     padding: 1rem 2rem;
 }
 .nav-button:hover {
-    background-color: var(--bs-gray-dark);
+    background-color: var(--primary);
     color: var(--oscuro);
     cursor: pointer;
 }
@@ -491,11 +483,6 @@ body {
 .icon-white { filter: brightness(0) invert(1); }
 
 .icon-dark { filter: brightness(0) invert(1); }
-
-.btn-cambiar-estado-viaje {
-    border
-}
-
 
 /* ----- Table ----- */
 .table {

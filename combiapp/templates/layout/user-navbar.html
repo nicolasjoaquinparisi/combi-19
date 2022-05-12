@@ -1,0 +1,64 @@
+{% load static %}
+<section class="pt-2 pb-2">
+    <div class="container d-flex justify-content-between">
+        <a href="/" class="w-auto">
+            <img src="{% static 'img/logo_is.png' %}" alt="logo" style="width: 6rem;" class="img-fluid">
+        </a>
+
+        <div class="mt-2">
+          <section class="d-flex align-items-center justify-content-end">
+            {% if request.user.cliente.tarjeta %}
+              <img src="{% static 'img/gold.png' %}" height="28px">
+            {% endif %}
+    
+            {% if request.user.chofer %}
+              <img src="{% static 'img/icons/card.svg' %}" class="mt-1 chofer-card" height="28px">
+            {% endif %}
+    
+            <div class="dropdown">
+              <a class="navbar-brand btn button-logout dropdown-toggle text-white" type="button"
+                  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ user.email }}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  {% if request.user.chofer or request.user.cliente %}
+                    <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
+                  {% endif %}
+                  <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+              </ul>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              {% if request.user.cliente.esta_bloqueado %}
+                <label class="text-danger me-4">Cuenta bloqueada por {{request.user.cliente.cantidad_dias_bloqueo}} días</label>
+              {% endif %}
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+</section>
+
+<nav class="bg-dark-primary d-flex justify-content-around">         
+  <div class="d-flex justify-content-start gap-5">
+    <a class="text-white nav-button" type="button" href="/">
+      <img src="/static/img/icons/buscar-viajes.svg" width="22" height="22" class="icon-white"><br>
+      Buscar viaje</a>
+
+    <a class="text-white nav-button" type="button" href="/comentarios">
+      <img src="/static/img/icons/comments.svg" width="22" height="22" class="icon-white"><br>
+      Comentarios</a>
+
+    <a class="text-white nav-button" type="button" href="/mis-pasajes">
+      <img src="/static/img/icons/ticket.svg" width="22" height="22" class="icon-white"><br>
+      Mis pasajes</a>
+
+    <a class="text-white nav-button" type="button" href="/mis-comentarios">
+      <img src="/static/img/icons/comment.svg" width="22" height="22" class="icon-white"><br>
+      Mis comentarios</a>
+
+    <a class="text-white nav-button" type="button" href="/about">
+      <img src="/static/img/icons/about.svg" width="22" height="22" class="icon-white"><br>
+      Sobre Combi-19</a>
+  </div>
+</nav>

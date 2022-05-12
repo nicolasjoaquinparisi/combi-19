@@ -1,0 +1,74 @@
+{% load static %}
+<section class="pt-2 pb-2">
+    <div class="container d-flex justify-content-between">
+        <a href="/" class="w-auto">
+            <img src="{% static 'img/logo_is.png' %}" alt="logo" style="width: 6rem;" class="img-fluid">
+        </a>
+
+        <div class="mt-2">        
+            <div class="dropdown">
+              <a class="btn button-logout dropdown-toggle" type="button"
+                  id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{ user.email }}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+</section>
+
+<nav class="bg-dark-primary d-flex justify-content-around">         
+  <div class="d-flex justify-content-start gap-2">
+    <a class="text-white nav-button" type="button" href="/listar-lugar">
+      <img src="/static/img/icons/lugar.svg" width="22" height="22" class="icon-white">
+      <br>
+      Lugares
+    </a>
+
+    <a class="text-white nav-button" type="button" href="/listar-ruta">
+      <img src="/static/img/icons/ruta.svg" width="22" height="22" class="icon-white">
+      <br>
+      Rutas
+    </a>
+
+    <a class="text-white nav-button" type="button" href="/listar-viaje">
+      <img src="/static/img/icons/viaje.svg" width="22" height="22" class="icon-white">
+      <br>
+      Viajes
+    </a>
+
+    <a class="text-white nav-button" type="button" href="/listar-chofer">
+      <img src="/static/img/icons/choferes.svg" width="22" height="22" class="icon-white">
+      <br>
+      Choferes
+    </a>
+
+    <a class="text-white nav-button" type="button" href="/listar-combi">
+      <img src="/static/img/icons/combi.svg" width="22" height="22" class="icon-white">
+      <br>
+      Combis
+    </a>
+
+    <a class="text-white nav-button" type="button" href="/listar-insumo-comestible">
+      <img src="/static/img/icons/insumo-comestible.svg" width="22" height="22" class="icon-white">
+      <br>
+      Insumos comestibles
+    </a>
+
+    <div class="dropdown nav-button">
+      <a class="text-white text-decoration-none dropdown-toggle text-white pull-left" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="/static/img/icons/historial.svg" width="22" height="22" class="icon-white">
+        <br>
+        Historiales
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="/historial-viajes">Viajes</a></li>
+        <li><a class="dropdown-item" href="/historial-testeos">Testeos por COVID-19</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
