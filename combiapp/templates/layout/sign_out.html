@@ -1,13 +1,14 @@
 {% load static %}
 
-<section class="py-2">
-    <div class="container mx-auto px-3 flex justify-between">
-        <a href="/">
+<section class="pt-2 pb-2">
+    <div class="container d-flex justify-content-between">
+        <a href="/" class="w-auto">
             <img src="{% static 'img/logo_is.png' %}" alt="logo" style="width: 7rem;" class="img-fluid">
         </a>
 
-        <div class="flex justify-end">
-            <a href="/login" class="mt-1 text-white text-normal no-underline" role="button">
+        <div class="d-flex justify-content-end">
+            <a href="/login" class="btn button-logout mt-1 text-normal text-decoration-none" style="height: 1rem;"
+                role="button">
                 Iniciar sesión
             </a>
         </div>
@@ -15,20 +16,23 @@
 </section>
 
 <nav class="bg-dark-primary">
-    <div class="container px-3 mx-auto">  
-        <div class="grid grid-cols-1 md:flex md:justify-center gap-5">
-            <a class="text-center text-white hover:bg-gray-800 px-5 py-3 md:text-base" type="button" href="/">
+    <div class="container">
+        <div class="d-flex justify-content-center gap-5">
+            <a class="text-center text-white px-5 py-3 text-decoration-none" type="button" href="/">
                 <img src="/static/img/icons/buscar-viajes.svg" width="22" height="22" class="mx-auto icon-white">
+                </br>
                 Buscar viaje
             </a>
 
-            <a class="text-center text-white hover:bg-gray-800 px-5 py-3 md:text-base" type="button" href="/comentarios">
+            <a class="text-center text-white px-5 py-3 text-decoration-none" type="button" href="/comentarios">
                 <img src="/static/img/icons/comments.svg" width="22" height="22" class="mx-auto icon-white">
+                </br>
                 Comentarios
             </a>
 
-            <a class="text-center text-white hover:bg-gray-800 px-5 py-3 md:text-base" type="button" href="/about">
+            <a class="text-center text-white px-5 py-3 text-decoration-none" type="button" href="/about">
                 <img src="/static/img/icons/about.svg" width="22" height="22" class="mx-auto icon-white">
+                </br>
                 Sobre Combi-19
             </a>
         </div>
